@@ -1,0 +1,62 @@
+
+{% extends "e_commerce/header.html" %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+{% block title %}
+Admin dashboard - Golio
+
+{% endblock title %}
+
+{% block body %}
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Admin Panel</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Welcome, Admin!</h1>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5>Total Users</h5>
+                        <p>123</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5>Total Sales</h5>
+                        <p>$4560</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h5>Pending Orders</h5>
+                        <p>12</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
+</html>

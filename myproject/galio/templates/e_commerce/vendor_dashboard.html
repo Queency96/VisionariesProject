@@ -1,0 +1,57 @@
+{% extends "e_commerce/header.html" %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+{% block title %}
+Vendor's Dashboard - Golio
+
+{% endblock title %}
+
+{% block body %}
+
+
+
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Vendor Panel</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Welcome, Vendor!</h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5>Products Listed</h5>
+                        <p>45</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5>Orders Received</h5>
+                        <p>78</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+{% endblock %}
+</html>

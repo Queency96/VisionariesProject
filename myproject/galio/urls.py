@@ -1,8 +1,6 @@
 from django.urls import path
 from . import views, security
-
-
-
+from .views import AdminDashboardView, VendorDashboardView, CustomerDashboardView, ErrorView
 
 
 
@@ -27,6 +25,11 @@ urlpatterns = [
     path('checkOut/', views.checkOut, name='checkOut'),
     path('compare/', views.compare, name='compare'),
     path('contactUs/', views.contactUs, name='contactUs'),
+    # path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    path('adminDashboard/', AdminDashboardView.as_view(), name='adminDashboard'),
+    path('vendorDashboard/', VendorDashboardView.as_view(), name='vendorDashboard'),
+    path('customerDashboard', CustomerDashboardView.as_view(), name='customerDashboard'),
+    path('dashboard/error/', ErrorView.as_view(), name='error'),
     path('loginRegister/', views.loginRegister, name='loginRegister'),
     path('myAccount/', views.myAccount, name='myAccount'),
     path('productDetailsAffiliate/', views.productDetailsAffiliate, name='productDetailsAffiliate'),
@@ -48,6 +51,7 @@ urlpatterns = [
     path('singleProduct/<int:pk>/', views.singleProduct, name='singleProduct'),
     # path('singleProduct/<int:pk>/', security.singleProduct, name='singleProduct'),
     path('wishlist/', views.wishlist, name='wishlist'),
+   
     
     
 

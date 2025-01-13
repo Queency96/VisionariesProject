@@ -1,0 +1,67 @@
+{% extends "e_commerce/header.html" %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+{% block title %}
+Customer Dashboard - Golio
+
+{% endblock title %}
+
+{% block body %}
+
+
+
+
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Customer Panel</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Welcome, Customer!</h1>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card bg-secondary text-white">
+                    <div class="card-body">
+                        <h5>Orders Placed</h5>
+                        <p>10</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-light text-dark">
+                    <div class="card-body">
+                        <h5>Cart Items</h5>
+                        <p>3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5>Wishlist Items</h5>
+                        <p>5</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+{% endblock %}
+</html>
