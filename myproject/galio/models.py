@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 
 
 
@@ -75,3 +76,105 @@ class Meta:
 
 
 
+
+# Get the custom user model
+User = get_user_model()
+
+class OrderStatus(models.TextChoices):
+    """
+    Enum-like class for order status choices.
+    """
+    PENDING = 'Pending', 'Pending'
+    PROCESSING = 'Processing', 'Processing'
+    SHIPPED = 'Shipped', 'Shipped'
+    DELIVERED = 'Delivered', 'Delivered'
+    CANCELLED = 'Cancelled', 'Cancelled'
+
+class Order(models.Model):
+    """
+    Represents a customer order.
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    status = models.CharField(
+        max_length=20,
+        choices=OrderStatus.choices,
+        default=OrderStatus.PENDING
+    )
+    payment_status = models.CharField(
+        max_length=20,
+        choices=[('Paid', 'Paid'), ('Pending', 'Pending'), ('Failed', 'Failed')],
+        default='Pending'
+    )
+    shipping_address = models.TextField(null=True, blank=True)
+    shipping_method = models.CharField(max_length=50, null=True, blank=True)
+    tax = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def calculate_total(self):
+        """
+        Calculate the total order price, including tax.
+        """
+        subtotal = sum(item.total_price for item in self.items.all())
+        self.total_price = subtotal + self.tax
+        return self.total_price
+
+    def save(self, *args, **kwargs):
+        """
+        Override save to ensure the total price is calculated before saving.
+        """
+        self.calculate_total()
+        super().save(*args, **kwargs)
+
+    def _str_(self):
+        return f"Order #{self.id} by {self.user.username}"
+
+class OrderItem(models.Model):
+    """
+    Represents an item in an order.
+    """
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    quantity = models.PositiveIntegerField(default=1)
+    price_per_item = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+
+    def save(self, *args, **kwargs):
+        """
+        Override save to calculate total price and update product stock.
+        """
+        self.total_price = self.price_per_item * self.quantity
+
+        # Update product stock if this is a new instance
+        if not self.pk:
+            if self.product.stock < self.quantity:
+                raise ValueError(f"Insufficient stock for {self.product.name}")
+            self.product.stock -= self.quantity
+            self.product.save()
+
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """
+        Override delete to restore product stock.
+        """
+        self.product.stock += self.quantity
+        self.product.save()
+        super().delete(*args, **kwargs)
+
+    def _str_(self):
+        return f"{self.quantity} x {self.product.name} in Order #{self.order.id}"
+
+class OrderStatusHistory(models.Model):
+    """
+    History of status changes for an order.
+    """
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='status_history')
+    previous_status = models.CharField(max_length=20)
+    new_status = models.CharField(max_length=20)
+    changed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return f"Order #{self.order.id} status changed to {self.new_status}"
