@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .error-container {
+            margin: 100px auto;
+            text-align: center;
+
+            .error-icon {
+                font-size: 2em;
+            }
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #333;
+        }
+
+        p {
+            font-size: 20px;
+            color: #666;
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <div class="error-container">
+        <div class="error-icon">🚫</div>
+        <h1 class= "display-404">404</h1>
+        <p>Page Not Found</p>
+        <p>The page you are looking for does not exist.</p>
+        <a href= "{% url "studenthome" %}">Go back to the homepage</a>
+    </div>
+</body>
+</html>
